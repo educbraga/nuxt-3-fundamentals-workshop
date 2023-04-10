@@ -2,25 +2,38 @@
   import { defineNuxtComponent } from '#app'
 export default defineNuxtComponent ({
   data: () => ({
-    todoList: []
+    photoGallery: []
   }),
-  methods: {
-    fetchTodoList() {
-      fetch('https://jsonplaceholder.typicode.com/todos/')
-      .then(response => response.json())
-      .then(json => {this.todoList = json})
+  computed: {
+    numberOfPhotos() {
+      return this.photoGallery.length
+    },
+    evenAlbums() {
+      return this.photoGallery.filter(item => item.albumId % 2 === 0)
+    },
+    oddAlbums() {
+      return this.photoGallery.filter(item => item.albumId % 2 !== 0)
+    },
+    albumPercentage() {
+      return this.evenAlbums.length / this.numberOfPhotos
     }
-  } 
+  },
+  methods: {
+    fetchPhotoGallery() {
+      fetch('https://jsonplaceholder.typicode.com/photos')
+      .then(response => response.json())
+      .then(json => {this.photoGallery = json})
+    }
+  }
 })
 </script>
 <template>
   <div>
-    <img src="/todo.jpg" alt="Todo photo"/>
-    <h1>Hello world! :)</h1>
-    <button @click="fetchTodoList">Fetch Data</button>
-    <ul v-for="todo in todoList" :key="`todo-id-${todo.userId}`">
-      <input type="checkbox" :checked="todo.completed"/>
-      <li>{{todo}}</li>
+    <h1>Photo Gallery</h1>
+    <button @click="fetchPhotoGallery">Fetch Photo Gallery</button>
+    <p>{{numberOfPhotos}} photos ({{evenAlbums.length}} even albums {{oddAlbums.length}} odd albums)</p>
+    <ul v-for="photo in photoGallery" :key="`photo-id-${photo.id}`">
+      <li><img :src="photo.thumbnailUrl"/></li>
     </ul>
   </div>
 </template>
