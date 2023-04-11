@@ -27,7 +27,6 @@ export default defineNuxtComponent ({
     <button @click="fetchTodoList">Fetch Data</button>
     <p>{{completedItems.length}} completed | {{remainingItems.length}} remaining</p>
     <ul v-for="todo in todoList" :key="`todo-id-${todo.userId}`">
-      <input type="checkbox" :checked="todo.completed"/>
-      <li>{{todo}}</li>
+    <li><input type="checkbox" :checked="todo.completed"/> {{todo.title}}</li>
     </ul>
 </template>
