@@ -1,28 +1,53 @@
 <script setup>
-  import { computed, ref } from "vue";
+import { computed, ref } from "vue";
 
-  const todoList = ref([])
+const photoGallery = ref([]);
 
-  const completedItems = computed(() => {
-      return todoList.value.filter(item => item.completed)
-    })
-  const remainingItems = computed(() => {
-      return todoList.value.filter(item => !item.completed)
-  })
+const numberOfPhotos = computed(() => {
+  return photoGallery.value.length;
+});
 
-  function fetchTodoList() {
-      fetch('https://jsonplaceholder.typicode.com/todos/')
-      .then(response => response.json())
-      .then(json => {todoList.value = json})
-    }
+const evenAlbums = computed(() => {
+  return photoGallery.value.filter((item) => item.albumId % 2 === 0);
+});
 
+const oddAlbums = computed(() => {
+  return photoGallery.value.filter((item) => item.albumId % 2 !== 0);
+});
+
+const albumPercentage = computed(() => {
+  return evenAlbums.value.length / numberOfPhotos.value;
+});
+
+function fetchPhotoGallery() {
+  fetch("https://jsonplaceholder.typicode.com/photos")
+    .then((response) => response.json())
+    .then((json) => {
+      photoGallery.value = json;
+    });
+}
 </script>
 <template>
-    <img src="/todo.jpg" alt="Todo photo"/>
-    <h1>Hello world! :)</h1>
-    <button @click="fetchTodoList">Fetch Data</button>
-    <p>{{completedItems.length}} completed | {{remainingItems.length}} remaining</p>
-    <ul v-for="todo in todoList" :key="`todo-id-${todo.userId}`">
-      <li><input type="checkbox" :checked="todo.completed"/> {{todo.title}}</li>
-    </ul>
+  <div class="container">
+    <div class="section">
+      <h1 class="title">Photo Gallery</h1>
+      <button @click="fetchPhotoGallery">Fetch Photo Gallery</button>
+      <p>
+        {{ numberOfPhotos }} photos ({{ evenAlbums.length }} even albums
+        {{ oddAlbums.length }} odd albums)
+      </p>
+      <ul class="photo-gallery-grid">
+        <li v-for="photo in photoGallery" :key="`photo-id-${photo.id}`">
+          <img :src="photo.thumbnailUrl" />
+        </li>
+      </ul>
+    </div>
+  </div>
 </template>
+<style lang="scss">
+@import './node_modules/bulma/bulma.sass';
+.photo-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+</style>
