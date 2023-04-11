@@ -11,7 +11,14 @@ import PhotoGallery from "./components/PhotoGallery";
           <PhotoGallery />
         </div>
         <div class="column">
-          <TodoViewer title="Test"/>
+          <TodoViewer title="Test">
+            <template v-slot:hero>
+              <h2>Subheader</h2>
+            </template>
+            <template v-slot:metrics="{completed}">
+              <h2>{{completed.length}} items completados</h2>
+            </template>
+          </TodoViewer>
         </div>
       </div>
     </div>
