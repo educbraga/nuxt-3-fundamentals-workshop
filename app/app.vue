@@ -1,5 +1,5 @@
-<script>
-  import { computed, ref } from 'vue';
+<script setup>
+  import { computed, ref } from "vue";
 
   const todoList = ref([])
 
@@ -18,7 +18,6 @@
 
 </script>
 <template>
-  <div>
     <img src="/todo.jpg" alt="Todo photo"/>
     <h1>Hello world! :)</h1>
     <button @click="fetchTodoList">Fetch Data</button>
@@ -27,5 +26,4 @@
       <input type="checkbox" :checked="todo.completed"/>
       <li>{{todo}}</li>
     </ul>
-  </div>
 </template>

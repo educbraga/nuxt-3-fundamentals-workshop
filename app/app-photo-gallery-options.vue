@@ -28,12 +28,10 @@ export default defineNuxtComponent ({
 })
 </script>
 <template>
-  <div>
     <h1>Photo Gallery</h1>
     <button @click="fetchPhotoGallery">Fetch Photo Gallery</button>
     <p>{{numberOfPhotos}} photos ({{evenAlbums.length}} even albums {{oddAlbums.length}} odd albums)</p>
     <ul v-for="photo in photoGallery" :key="`photo-id-${photo.id}`">
       <li><img :src="photo.thumbnailUrl"/></li>
     </ul>
-  </div>
 </template>

@@ -28,7 +28,6 @@ function fetchPhotoGallery() {
 }
 </script>
 <template>
-  <div>
     <h1>Photo Gallery</h1>
     <button @click="fetchPhotoGallery">Fetch Photo Gallery</button>
     <p>
@@ -38,5 +37,4 @@ function fetchPhotoGallery() {
     <ul v-for="photo in photoGallery" :key="`photo-id-${photo.id}`">
       <li><img :src="photo.thumbnailUrl" /></li>
     </ul>
-  </div>
 </template>

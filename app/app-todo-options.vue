@@ -22,7 +22,6 @@ export default defineNuxtComponent ({
 })
 </script>
 <template>
-  <div>
     <img src="/todo.jpg" alt="Todo photo"/>
     <h1>Hello world! :)</h1>
     <button @click="fetchTodoList">Fetch Data</button>
@@ -31,5 +30,4 @@ export default defineNuxtComponent ({
       <input type="checkbox" :checked="todo.completed"/>
       <li>{{todo}}</li>
     </ul>
-  </div>
 </template>
