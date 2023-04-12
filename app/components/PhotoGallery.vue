@@ -1,48 +1,55 @@
 <script setup>
-import { computed, ref } from "vue";
+// import { computed, ref } from 'vue'
 
-const photoGallery = ref([]);
+let photoGallery = ref([])
 
 const numberOfPhotos = computed(() => {
-  return photoGallery.value.length;
-});
+  return photoGallery.value.length
+})
 
 const evenAlbums = computed(() => {
-  return photoGallery.value.filter((item) => item.albumId % 2 === 0);
-});
+  return photoGallery.value.filter(item => item.albumId % 2 === 0)
+})
 
 const oddAlbums = computed(() => {
-  return photoGallery.value.filter((item) => item.albumId % 2 !== 0);
-});
-
-const albumPercentage = computed(() => {
-  return evenAlbums.value.length / numberOfPhotos.value;
-});
+  return photoGallery.value.filter(item => !(item.albumId % 2 === 0))
+})
 
 function fetchPhotoGallery() {
-  fetch("https://jsonplaceholder.typicode.com/photos")
-    .then((response) => response.json())
-    .then((json) => {
-      photoGallery.value = json;
-    });
+  fetch('https://jsonplaceholder.typicode.com/photos')
+    .then(response => response.json())
+    .then(json => {
+      photoGallery.value = json
+    })
 }
 </script>
+
 <template>
-  <h1 class="title">Photo Gallery</h1>
-  <button @click="fetchPhotoGallery">Fetch Photo Gallery</button>
+  <BaseDisplay
+    title="Photo Gallery"
+    itemType="photos"
+    v-model:itemList="photoGallery"
+  >
+    <template v-slot:hero> </template>
+    <template v-slot:items>
+      <li v-for="photo in photoGallery" :key="`photo-id-${photo.id}`">
+        <img :src="photo.thumbnailUrl" />
+      </li>
+    </template>
+  </BaseDisplay>
+  <!-- <h1>Photo Gallery</h1>
+  <button @click="fetchPhotoGallery">Fetch Data</button>
   <p>
-    {{ numberOfPhotos }} photos ({{ evenAlbums.length }} even albums
-    {{ oddAlbums.length }} odd albums)
+    {{ numberOfPhotos }} photos ({{ oddAlbums.length }} odd albums |
+    {{ evenAlbums.length }} even albums)
   </p>
-  <ul class="photo-gallery-grid">
-    <li v-for="photo in photoGallery" :key="`photo-id-${photo.id}`">
-      <img :src="photo.thumbnailUrl" />
-    </li>
-  </ul>
+  <ul class="photo-gallery-list">
+
+  </ul> -->
 </template>
 
 <style lang="scss">
-.photo-gallery-grid {
+.photo-gallery-list {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
 }

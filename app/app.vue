@@ -1,7 +1,7 @@
 <script setup>
-import { computed, ref } from "vue";
-import TodoViewer from "./components/TodoViewer";
-import PhotoGallery from "./components/PhotoGallery";
+// import { computed, ref } from "vue";
+// import TodoViewer from "./components/TodoViewer";
+// import PhotoGallery from "./components/PhotoGallery";
 </script>
 <template>
   <div class="container">
